@@ -6,10 +6,10 @@ cp packet_tracker.o ../app/
 
 # llvm-objdump -h packet_tracker.o
 
-sudo bpftool net detach xdp dev enp0s3
+# sudo bpftool net detach xdp dev enp0s3
 
-sudo rm -rf /sys/fs/bpf/packet_tracker
+# sudo rm -rf /sys/fs/bpf/packet_tracker
 
-sudo bpftool prog load packet_tracker.o /sys/fs/bpf/packet_tracker
-sudo bpftool net attach xdp pinned /sys/fs/bpf/packet_tracker dev enp0s3
-sudo bpftool net list dev enp0s3
+# sudo bpftool prog load packet_tracker.o /sys/fs/bpf/packet_tracker
+# sudo bpftool net attach xdp pinned /sys/fs/bpf/packet_tracker dev enp0s3
+# sudo bpftool net list dev enp0s3

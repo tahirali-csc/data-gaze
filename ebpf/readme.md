@@ -27,3 +27,6 @@ list bppf maps
 sudo bpftool map show
 sudo bpftool map dump id 158
 ```
+
+list ebpf programs on interface
+sudo bpftool net list dev enp0s3
