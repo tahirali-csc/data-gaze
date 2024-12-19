@@ -1,32 +1,13 @@
-**Install Kernel Headers**
-```bash
-sudo apt update
-sudo apt install linux-headers-$(uname -r)
-```
+### Dependencies
 
-**bpf_helpers.h and other eBPF utility headers are part of the libbpf package.**
+Install eBPF dependencies
 
 ```bash
-sudo apt install libbpf-dev
+./setup-ebpf.sh
 ```
 
-**Issues**
+### Build 
 
-asm/types.h Error during compilation of ebpf code 
-
-https://stackoverflow.com/questions/77454504/asm-types-h-error-during-compilation-of-ebpf-code
-
-
-**bpftool**
-
-https://thegraynode.io/posts/bpf_bpftool/
-
-list bppf maps
-
+```bash
+make build
 ```
-sudo bpftool map show
-sudo bpftool map dump id 158
-```
-
-list ebpf programs on interface
-sudo bpftool net list dev enp0s3

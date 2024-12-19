@@ -3,6 +3,7 @@ sudo apt update
 sudo apt install clang -y
 
 sudo apt install linux-headers-$(uname -r) -y
+# bpf_helpers.h and other eBPF utility headers are part of the libbpf package
 sudo apt install libbpf-dev
 
 # hack for this error

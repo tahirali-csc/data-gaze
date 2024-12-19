@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"encoding/binary"
 	"fmt"
 	"log"
 	"net"
@@ -14,6 +16,16 @@ type Packet struct {
 	SrcIP   uint32
 	DstIP   uint32
 	PktSize uint32
+}
+
+func uint32ToIP(ipUint32 uint32) string {
+	// Convert from network byte order to host byte order
+	ipBytes := make([]byte, 4)
+	binary.BigEndian.PutUint32(ipBytes, ipUint32)
+
+	// Convert to net.IP and then to string
+	ip := net.IPv4(ipBytes[0], ipBytes[1], ipBytes[2], ipBytes[3])
+	return ip.String()
 }
 
 func main() {
@@ -60,18 +72,21 @@ func main() {
 			continue
 		}
 
-		fmt.Println(record)
+		// fmt.Println(record)
 
-		// var pkt Packet
-		// err = binary.Read(record, binary.LittleEndian, &pkt)
-		// if err != nil {
-		// 	log.Printf("Failed to decode packet: %v", err)
-		// 	continue
-		// }
+		rawData := record.RawSample
+
+		var pkt Packet
+		reader := bytes.NewReader(rawData)
+		err = binary.Read(reader, binary.BigEndian, &pkt)
+		if err != nil {
+			log.Printf("Failed to decode packet: %v", err)
+			continue
+		}
 
 		// // Format packet data for Python script
-		// data := fmt.Sprintf("%d,%d,%d\n", pkt.SrcIP, pkt.DstIP, pkt.PktSize)
-		// fmt.Println(data)
+		data := fmt.Sprintf("%s, %s, %d", uint32ToIP(pkt.SrcIP), uint32ToIP(pkt.DstIP), pkt.PktSize)
+		fmt.Println(data)
 		// cmd := exec.Command("python3", "predict.py")
 		// cmd.Stdin = strings.NewReader(data)
 		// output, err := cmd.Output()
