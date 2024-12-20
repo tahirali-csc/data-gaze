@@ -6,6 +6,9 @@
         "tcp.h": "c",
         "types.h": "c",
         "bpf_helpers.h": "c",
-        "bpf_helper_defs.h": "c"
+        "bpf_helper_defs.h": "c",
+        "ptrace.h": "c",
+        "if_packet.h": "c",
+        "udp.h": "c"
     }
 }

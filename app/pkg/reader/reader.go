@@ -13,6 +13,8 @@ import (
 type Packet struct {
 	SrcIP   uint32
 	DstIP   uint32
+	SrcPort uint16
+	DstPort uint16
 	PktSize uint32
 }
 
@@ -52,7 +54,10 @@ func (rb *PacketReader) Read() (string, error) {
 	}
 
 	// Format packet data (for example, this can be used to pass data to a Python script)
-	data := fmt.Sprintf("%s, %s, %d", uint32ToIP(pkt.SrcIP), uint32ToIP(pkt.DstIP), pkt.PktSize)
+	data := fmt.Sprintf("%s:%d, %s:%d, %d",
+		uint32ToIP(pkt.SrcIP), pkt.SrcPort,
+		uint32ToIP(pkt.DstIP), pkt.DstPort,
+		pkt.PktSize)
 	return data, nil
 }
 
