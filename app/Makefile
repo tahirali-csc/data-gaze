@@ -1,12 +1,13 @@
-build:
-	go build main.go
+EXE := "datagaze"
 
-# Clean up
+build:
+	go build -o $(EXE) main.go 
+
 clean:
-	rm -f ./main
+	rm -f ./$(EXE)
 
 run:
-	build 
-	sudo go run ./main	
+	make build 
+	sudo ./$(EXE)	
 
-.PHONY: build clean
+.PHONY: build clean run
