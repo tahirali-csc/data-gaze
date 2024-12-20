@@ -29,7 +29,7 @@ func main() {
 	link, err := program.Attach(prog, *iface)
 	defer link.Close()
 
-	reader, err := reader.NewRingBufferReader(coll.Maps["ringbuf"])
+	reader, err := reader.NewPacketReader(coll.Maps["ringbuf"])
 	defer reader.Close()
 
 	for {

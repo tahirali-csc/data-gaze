@@ -20,8 +20,8 @@ type PacketReader struct {
 	reader *ringbuf.Reader
 }
 
-// NewRingBufferReader creates a new RingBufferReader instance
-func NewRingBufferReader(dataMap *ebpf.Map) (*PacketReader, error) {
+// NewPacketReader creates a new RingBufferReader instance
+func NewPacketReader(dataMap *ebpf.Map) (*PacketReader, error) {
 	rbReader, err := ringbuf.NewReader(dataMap)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create ring buffer reader: %v", err)
