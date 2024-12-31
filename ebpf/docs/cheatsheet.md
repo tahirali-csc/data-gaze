@@ -20,3 +20,6 @@ read trace logs
 ```bash
 sudo cat /sys/kernel/debug/tracing/trace_pipe
 ```
+
+## Articles
+https://www.aquasec.com/blog/vmlinux-h-ebpf-programs/
