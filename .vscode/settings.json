@@ -9,6 +9,8 @@
         "bpf_helper_defs.h": "c",
         "ptrace.h": "c",
         "if_packet.h": "c",
-        "udp.h": "c"
+        "udp.h": "c",
+        "bpf_core_read.h": "c",
+        "vmlinux.h": "c"
     }
 }

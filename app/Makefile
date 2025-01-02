@@ -1,5 +1,5 @@
 EXE := "datagaze"
-ELF_FILE := "packet_tracker.o"
+ELF_FILE := "data_gaze.o"
 
 build:
 	mkdir -p ./build

@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// Define a string flag for the file name
-	file := flag.String("file", "packet_tracker.o", "ELF file")
+	file := flag.String("file", "data_gaze.o", "ELF file")
 
 	// Define a string flag for the file name
 	iface := flag.String("iface", "enp0s3", "ELF file")
