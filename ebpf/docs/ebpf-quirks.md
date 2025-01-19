@@ -35,3 +35,15 @@ eBPF programs often deal with data structures (like packet headers) that are tig
 Network packet headers (e.g., Ethernet, IP, TCP) are laid out in a packed format according to protocol standards.
 If an eBPF program accesses these headers using a normal struct (with padding), the field offsets will not match the actual packet layout, leading to incorrect data processing.
 By defining structs as packed, eBPF programs can correctly map to these tightly packed network headers and access fields without any mismatch.
+
+## Making a single ELF file.
+
+Linking eBPF code from different object files into a single one is not typically supported by the compiler.
+```
+ld -r packet_tracker.o connection_tracker.o -o combined.o
+ld: packet_tracker.o: Relocations in generic ELF (EM: 247)
+```
+
+Workaround:
+
+https://stackoverflow.com/questions/75666122/compiling-ebpf-programs-over-multiple-files-into-a-single-bpf-object-file
