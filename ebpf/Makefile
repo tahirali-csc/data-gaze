@@ -2,9 +2,8 @@
 CLANG := clang
 LLC := llc
 BPFTOOL := bpftool
-# SRC := packet_tracker.c
-OBJ_DIR := ./obj
-OBJ := $(OBJ_DIR)/data_gaze.o
+SRC := packet_tracker.c
+OBJ := packet_tracker.o
 BPF_DIR := /sys/fs/bpf
 PROG_NAME := packet_tracker
 # test interface for loading the program
@@ -14,16 +13,8 @@ IFACE := enp0s3
 all: build install
 
 # Compile eBPF program
-build: clean 
-# -g enable the debugging
-	@mkdir -p $(OBJ_DIR)  # Create obj directory if not exists
-	# Compile each .c file in xdp and inet directories into individual .o files
-	$(CLANG) -O2 -g -target bpf -c ./xdp/*.c -o $(OBJ_DIR)/xdp.o
-	$(CLANG) -O2 -g -target bpf -c ./inet/*.c -o $(OBJ_DIR)/inet.o
-	# Generate final BPF object file using bpftool
-	@OBJECT_FILES=$$(find $(OBJ_DIR) -type f -name "*.o"); \
-	echo "Object files: $$OBJECT_FILES"; \
-	bpftool gen object $(OBJ) $$OBJECT_FILES
+build:
+	$(CLANG) -O2 -g -target bpf -c $(SRC) -o $(OBJ)
 	cp $(OBJ) ../app/
 
 # Install eBPF program
@@ -38,6 +29,6 @@ install:
 
 # Clean up
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -f $(OBJ)
 
 .PHONY: all build install clean
