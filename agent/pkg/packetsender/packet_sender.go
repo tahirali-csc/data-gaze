@@ -1,6 +1,7 @@
 package packetsender
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -12,11 +13,14 @@ import (
 )
 
 type Client struct {
+	url string
 }
 
-func sendPacketInChunksWithRetry(url string, packet model.Packet, chunkSize, maxRetries int) error {
-	client := &http.Client{}
+func NewClient(url string) *Client {
+	return &Client{url: url}
+}
 
+func (c *Client) Send(packet model.Packet) error {
 	packetData, err := json.Marshal(packet)
 	if err != nil {
 		return fmt.Errorf("error marshalling packet: %v", err)
@@ -29,7 +33,7 @@ func sendPacketInChunksWithRetry(url string, packet model.Packet, chunkSize, max
 	client.RetryMax = 3 // Set the maximum number of retries
 
 	// Create a new request
-	req, err := retryablehttp.NewRequest(http.MethodPost, "https://localhost:8080/connections/", nil)
+	req, err := retryablehttp.NewRequest(http.MethodPost, "https://localhost:8080/connections/", bytes.NewBuffer(packetData))
 	if err != nil {
 		log.Fatalf("Error creating request: %v", err)
 	}
@@ -47,5 +51,5 @@ func sendPacketInChunksWithRetry(url string, packet model.Packet, chunkSize, max
 	} else {
 		fmt.Printf("POST request failed with status code: %d\n", resp.StatusCode)
 	}
-
+	return nil
 }

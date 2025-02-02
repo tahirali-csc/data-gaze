@@ -1,6 +1,7 @@
 package main
 
 import (
+	"agent/pkg/packetsender"
 	"agent/pkg/program"
 	"agent/pkg/reader"
 	"flag"
@@ -32,13 +33,19 @@ func main() {
 	reader, err := reader.NewPacketReader(coll.Maps["ringbuf"])
 	defer reader.Close()
 
+	client := packetsender.NewClient("http://localhost:8080/connections")
+
 	for {
 		data, err := reader.Read()
 		if err != nil {
 			fmt.Println("error reading packet::", err)
 			continue
 		}
-		fmt.Println(data)
+		// fmt.Println(data)
+
+		if err = client.Send(data); err != nil {
+			log.Println(err)
+		}
 
 	}
 }
